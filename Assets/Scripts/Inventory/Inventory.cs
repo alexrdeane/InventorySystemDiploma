@@ -39,6 +39,8 @@ namespace Linear
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
             inv.Add(ItemData.CreateItem(0));
+            inv.Add(ItemData.CreateItem(500));
+            inv.Add(ItemData.CreateItem(800));
         }
 
         private void Update()
@@ -47,7 +49,7 @@ namespace Linear
             {
                 inv.Add(ItemData.CreateItem(Random.Range(0, 3)));
             }
-            if(Input.GetKeyDown(KeyCode.P))
+            if (Input.GetKeyDown(KeyCode.P))
             {
                 inv[0].Amount += 1;
                 Debug.Log(inv[0].Amount);
@@ -81,6 +83,14 @@ namespace Linear
                 scr.y = Screen.height / 9;
 
                 GUI.Box(new Rect(0, 0, scr.x * 8, Screen.height), "");
+
+                for (int i = 0; i < (int)ItemType.NumberOfTypes; i++)
+                {
+                    if (GUI.Button(new Rect(i * scr.x, 0, scr.x, 0.25f * scr.y), ((ItemType)i).ToString()))
+                    {
+                        sortType = ((ItemType)i).ToString();
+                    }
+                }
                 Display();
                 GUI.skin = invSkin;
                 if (selectedItem != null)
@@ -89,7 +99,7 @@ namespace Linear
                     GUI.DrawTexture(new Rect(4.75f * scr.x, 0.55f * scr.y, 1.5f * scr.x, 1.5f * scr.y), selectedItem.Icon);
                     // GUI.backgroundColor = new Color(1.0f, 1.0f, 1.0f, 0f);
                     GUI.Box(new Rect(4.2f * scr.x, 2.2f * scr.y, 3 * scr.x, 3 * scr.y), selectedItem.Description);
-                    GUI.Button(new Rect(6f * scr.x, 3.15f * scr.y, 1.5f * scr.x, 0.25f * scr.y), "Current Amount: "+selectedItem.Amount);
+                    GUI.Button(new Rect(6f * scr.x, 3.15f * scr.y, 1.5f * scr.x, 0.25f * scr.y), "Current Amount: " + selectedItem.Amount);
                     ItemUse(selectedItem.Type);
                 }
                 else
@@ -103,29 +113,81 @@ namespace Linear
 
         void Display()
         {
-            if (inv.Count <= 34)//if we have 34 or less items in inventory
+            if (!(sortType == "All" || sortType == ""))
             {
+                ItemType type = (ItemType)System.Enum.Parse(typeof(ItemType), sortType);
+                int a = 0;//amount of type
+                int s = 0;//slot position
                 for (int i = 0; i < inv.Count; i++)
                 {
-                    if (GUI.Button(new Rect(0.5f * scr.x, 0.25f * scr.y + i * (0.25f * scr.y), 3 * scr.x, 0.25f * scr.y), inv[i].Name))
+                    if (inv[i].Type == type)
                     {
-                        selectedItem = inv[i];
+                        a++;
                     }
                 }
-            }
-            else//more than 34 items
-            {
-                scrollPos = GUI.BeginScrollView(new Rect(0, 0.25f * scr.y, 3.75f * scr.x, 8.5f * scr.y), scrollPos, new Rect(0, 0, 0, 8.5f * scr.y + ((inv.Count - 34) * (0.25f * scr.y))), false, true);
+                if (a <= 34)
+                {
+                    for (int i = 0; i < inv.Count; i++)
+                    {
+                        if (inv[i].Type == type)
+                        {
+                            if (GUI.Button(new Rect(0.5f * scr.x, 0.25f * scr.y + s * (0.25f * scr.y), 3 * scr.x, 0.25f * scr.y), inv[i].Name))
+                            {
+                                selectedItem = inv[i];
+                            }
+                            s++;
+                        }
+                    }
+                }
+                else
+                {
+                    if (a > 0)
+                    {
+                        scrollPos = GUI.BeginScrollView(new Rect(0, 0.25f * scr.y, 3.75f * scr.x, 8.5f * scr.y), scrollPos, new Rect(0, 0, 0, 8.5f * scr.y + ((inv.Count - 34) * (0.25f * scr.y))), false, true);
 
-                for (int i = 0; i < inv.Count; i++)
+                        for (int i = 0; i < inv.Count; i++)
+                        {
+                            if (inv[i].Type == type)
+                            {
+                                if (GUI.Button(new Rect(0.5f * scr.x, 0 * scr.y + s * (0.25f * scr.y), 3 * scr.x, 0.25f * scr.y), inv[i].Name))
+                                {
+                                    selectedItem = inv[i];
+                                }
+                                s++;
+                            }
+                        }
+                    }
+                    GUI.EndScrollView();
+                }
+            }
+            else
+            {
+                if (inv.Count <= 34)//if we have 34 or less items in inventory
                 {
-                    if (GUI.Button(new Rect(0.5f * scr.x, 0.25f * scr.y + i * (0.25f * scr.y), 3 * scr.x, 0.25f * scr.y), inv[i].Name))
+                    for (int i = 0; i < inv.Count; i++)
                     {
-                        selectedItem = inv[i];
+                        if (GUI.Button(new Rect(0.5f * scr.x, 0.25f * scr.y + i * (0.25f * scr.y), 3 * scr.x, 0.25f * scr.y), inv[i].Name))
+                        {
+                            selectedItem = inv[i];
+                        }
                     }
                 }
-                GUI.EndScrollView();
+                else//more than 34 items
+                {
+                    scrollPos = GUI.BeginScrollView(new Rect(0, 0.25f * scr.y, 3.75f * scr.x, 8.5f * scr.y), scrollPos, new Rect(0, 0, 0, 8.5f * scr.y + ((inv.Count - 34) * (0.25f * scr.y))), false, true);
+
+                    for (int i = 0; i < inv.Count; i++)
+                    {
+                        if (GUI.Button(new Rect(0.5f * scr.x, 0 * scr.y + i * (0.25f * scr.y), 3 * scr.x, 0.25f * scr.y), inv[i].Name))
+                        {
+                            selectedItem = inv[i];
+                        }
+                    }
+                    GUI.EndScrollView();
+                }
+
             }
+
         }
 
         void ItemUse(ItemType Type)
@@ -143,12 +205,61 @@ namespace Linear
                 case ItemType.Apparel:
                     break;
                 case ItemType.Weapon:
-                    break;  
+
+                    if (equipmentSlots[0].curItem == null || selectedItem.Name != equipmentSlots[0].curItem.name)
+                    {
+                        if (GUI.Button(new Rect(4f * scr.x, 5f * scr.y, 1f * scr.x, .5f * scr.y), "Equip"))
+                        {
+                            if (equipmentSlots[0].curItem != null)
+                            {
+                                Destroy(equipmentSlots[0].curItem);
+                            }
+                            curWeapon = Instantiate(selectedItem.ItemMesh, equipmentSlots[0].location);
+                            equipmentSlots[0].curItem = curWeapon;
+                            curWeapon.name = selectedItem.Name;
+                        }
+                    }
+                    else
+                    {
+                        if (GUI.Button(new Rect(4f * scr.x, 5f * scr.y, 1f * scr.x, .5f * scr.y), "Unequip"))
+                        {
+                            if (equipmentSlots[0].curItem != null)
+                            {
+                                Destroy(equipmentSlots[0].curItem);
+                            }
+                            Destroy(curWeapon);
+                        }
+                    }
+                    break;
                 case ItemType.Resource:
                     break;
                 case ItemType.Equipment:
                     break;
                 case ItemType.Armour:
+                    if (equipmentSlots[1].curItem == null || selectedItem.Name != equipmentSlots[1].curItem.name)
+                    {
+                        if (GUI.Button(new Rect(4f * scr.x, 5f * scr.y, 1f * scr.x, .5f * scr.y), "Equip"))
+                        {
+                            if (equipmentSlots[1].curItem != null)
+                            {
+                                Destroy(equipmentSlots[1].curItem);
+                            }
+                            curHelm = Instantiate(selectedItem.ItemMesh, equipmentSlots[1].location);
+                            equipmentSlots[1].curItem = curHelm;
+                            curHelm.name = selectedItem.Name;
+                        }
+                    }
+                    else
+                    {
+                        if (GUI.Button(new Rect(4f * scr.x, 5f * scr.y, 1f * scr.x, .5f * scr.y), "Unequip"))
+                        {
+                            if (equipmentSlots[1].curItem != null)
+                            {
+                                Destroy(equipmentSlots[1].curItem);
+                            }
+                            Destroy(curHelm);
+                        }
+                    }
                     break;
                 case ItemType.QuestItem:
                     break;

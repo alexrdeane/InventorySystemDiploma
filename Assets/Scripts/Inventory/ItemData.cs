@@ -18,7 +18,7 @@ public static class ItemData
         string _name = "";
         string _description = "";
         string _rarity = "";
-        ItemType _type = ItemType.UNASSIGNED;
+        ItemType _type = ItemType.Ingredient;
         switch (itemID)
         {
             #region Ingredient 0 - 99
@@ -341,7 +341,7 @@ public static class ItemData
             #endregion
             #region Armour 800 - 899
             case 800:
-                _name = "Steel Helemt";
+                _name = "Steel Helmet";
                 _description = "Protects your head from lethal blows whilst you battle enemies up close";
                 _amount = 1;
                 _value = 1;

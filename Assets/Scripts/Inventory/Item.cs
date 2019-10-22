@@ -95,20 +95,19 @@ public class Item
 }
 public enum ItemType
 {
+    All,
     Ingredient,
+    Resource,
     Potion,
     Scroll,
     Food,
     Apparel,
     Weapon,
-    Resource,
     Equipment,
     Armour,
     QuestItem,
     Money,
-    Junk,
     Miscellaneous,
-    UNASSIGNED
-
-
+    Junk,
+    NumberOfTypes
 }

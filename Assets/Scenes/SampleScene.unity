@@ -669,11 +669,11 @@ MonoBehaviour:
   curWeapon: {fileID: 0}
   curHelm: {fileID: 0}
   equipmentSlots:
-  - name: 
-    location: {fileID: 0}
+  - name: Hand
+    location: {fileID: 420823434}
     curItem: {fileID: 0}
-  - name: 
-    location: {fileID: 0}
+  - name: Head
+    location: {fileID: 65902656}
     curItem: {fileID: 0}
   invSkin: {fileID: 11400000, guid: 53b5a2a4d8bdf3941a955e92500c9676, type: 2}
 --- !u!4 &1397708655
