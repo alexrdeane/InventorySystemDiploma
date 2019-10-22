@@ -11,13 +11,15 @@ namespace Linear
         public List<Item> inv = new List<Item>();//list of items
         public Item selectedItem;
         public bool showInv;
+        public GameObject inventory;
+        public GameObject inventoryItem;
 
         public Vector2 scr;
         public Vector2 scrollPos;
 
         public int money;
 
-        public string sortType = "";
+        public int sortType;
         public Transform dropTransform;
         public GameObject curWeapon;
         public GameObject curHelm;
@@ -38,9 +40,6 @@ namespace Linear
             Time.timeScale = 1;
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
-            inv.Add(ItemData.CreateItem(0));
-            inv.Add(ItemData.CreateItem(500));
-            inv.Add(ItemData.CreateItem(800));
         }
 
         private void Update()
@@ -79,20 +78,21 @@ namespace Linear
         {
             if (showInv)
             {
-                scr.x = Screen.width / 16;
-                scr.y = Screen.height / 9;
+                inventory.SetActive(true);
 
-                GUI.Box(new Rect(0, 0, scr.x * 8, Screen.height), "");
+                //scr.x = Screen.width / 16;
+                //scr.y = Screen.height / 9;
+
+                //GUI.Box(new Rect(0, 0, scr.x * 8, Screen.height), "");
 
                 for (int i = 0; i < (int)ItemType.NumberOfTypes; i++)
                 {
                     if (GUI.Button(new Rect(i * scr.x, 0, scr.x, 0.25f * scr.y), ((ItemType)i).ToString()))
                     {
-                        sortType = ((ItemType)i).ToString();
+                        sortType = i;
                     }
                 }
                 Display();
-                GUI.skin = invSkin;
                 if (selectedItem != null)
                 {
                     GUI.Box(new Rect(4.75f * scr.x, 0.25f * scr.y, 1.5f * scr.x, 1.5f * scr.y), selectedItem.Name);
@@ -106,16 +106,18 @@ namespace Linear
                 {
                     return;
                 }
-                GUI.skin = null;
-
+            }
+            else
+            {
+                inventory.SetActive(false);
             }
         }
 
         void Display()
         {
-            if (!(sortType == "All" || sortType == ""))
+            if (!(sortType == 0 || sortType == int.MinValue))
             {
-                ItemType type = (ItemType)System.Enum.Parse(typeof(ItemType), sortType);
+                ItemType type = (ItemType)System.Enum.Parse(typeof(ItemType), sortType.ToString());
                 int a = 0;//amount of type
                 int s = 0;//slot position
                 for (int i = 0; i < inv.Count; i++)
@@ -143,8 +145,7 @@ namespace Linear
                 {
                     if (a > 0)
                     {
-                        scrollPos = GUI.BeginScrollView(new Rect(0, 0.25f * scr.y, 3.75f * scr.x, 8.5f * scr.y), scrollPos, new Rect(0, 0, 0, 8.5f * scr.y + ((inv.Count - 34) * (0.25f * scr.y))), false, true);
-
+                        scrollPos = GUI.BeginScrollView(new Rect(0, 0.25f * scr.y, 3.75f * scr.x, 8.5f * scr.y), scrollPos, new Rect(0, 0, 0, 8.5f * scr.y + ((a - 34) * (0.25f * scr.y))), false, true);
                         for (int i = 0; i < inv.Count; i++)
                         {
                             if (inv[i].Type == type)
@@ -174,8 +175,8 @@ namespace Linear
                 }
                 else//more than 34 items
                 {
-                    scrollPos = GUI.BeginScrollView(new Rect(0, 0.25f * scr.y, 3.75f * scr.x, 8.5f * scr.y), scrollPos, new Rect(0, 0, 0, 8.5f * scr.y + ((inv.Count - 34) * (0.25f * scr.y))), false, true);
 
+                    scrollPos = GUI.BeginScrollView(new Rect(0, 0.25f * scr.y, 3.75f * scr.x, 8.5f * scr.y), scrollPos, new Rect(0, 0, 0, 8.5f * scr.y + ((inv.Count - 34) * (0.25f * scr.y))), false, true);
                     for (int i = 0; i < inv.Count; i++)
                     {
                         if (GUI.Button(new Rect(0.5f * scr.x, 0 * scr.y + i * (0.25f * scr.y), 3 * scr.x, 0.25f * scr.y), inv[i].Name))
@@ -185,26 +186,24 @@ namespace Linear
                     }
                     GUI.EndScrollView();
                 }
-
             }
-
         }
 
         void ItemUse(ItemType Type)
         {
             switch (Type)
             {
-                case ItemType.Ingredient:
+                case ItemType.Ingredients:
                     break;
-                case ItemType.Potion:
+                case ItemType.Potions:
                     break;
-                case ItemType.Scroll:
+                case ItemType.Scrolls:
                     break;
                 case ItemType.Food:
                     break;
                 case ItemType.Apparel:
                     break;
-                case ItemType.Weapon:
+                case ItemType.Weapons:
 
                     if (equipmentSlots[0].curItem == null || selectedItem.Name != equipmentSlots[0].curItem.name)
                     {
@@ -231,7 +230,7 @@ namespace Linear
                         }
                     }
                     break;
-                case ItemType.Resource:
+                case ItemType.Resources:
                     break;
                 case ItemType.Equipment:
                     break;
@@ -261,7 +260,7 @@ namespace Linear
                         }
                     }
                     break;
-                case ItemType.QuestItem:
+                case ItemType.QuestItems:
                     break;
                 case ItemType.Money:
                     break;

@@ -11,6 +11,8 @@ public class Item
     private ItemType _type;
     private Texture2D _icon;
     private GameObject _mesh;
+    private bool _stackable;
+    private bool _isStacked;
 
     private int _damage;
     private int _armour;
@@ -66,6 +68,16 @@ public class Item
         set { _mesh = value; }
 
     }
+    public bool Stackable
+    {
+        get { return _stackable; }//read
+        set { _stackable = value; }//write
+    }
+    public bool IsStacked
+    {
+        get { return _isStacked ; }//read
+        set { _isStacked = value; }//write
+    }
     public int Durability
     {
         get { return _durability; }//read
@@ -96,16 +108,16 @@ public class Item
 public enum ItemType
 {
     All,
-    Ingredient,
-    Resource,
-    Potion,
-    Scroll,
+    Ingredients,
+    Resources,
+    Potions,
+    Scrolls,
     Food,
     Apparel,
-    Weapon,
+    Weapons,
     Equipment,
     Armour,
-    QuestItem,
+    QuestItems,
     Money,
     Miscellaneous,
     Junk,

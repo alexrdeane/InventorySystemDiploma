@@ -15,10 +15,12 @@ public static class ItemData
         int _mana = 0;
         string _icon = "";
         string _mesh = "";
+        bool _stackable;
+        bool _isStacked = false;
         string _name = "";
         string _description = "";
         string _rarity = "";
-        ItemType _type = ItemType.Ingredient;
+        ItemType _type = ItemType.Ingredients;
         switch (itemID)
         {
             #region Ingredient 0 - 99
@@ -27,39 +29,45 @@ public static class ItemData
                 _description = "A hearty mushroom used for cooking with basic ingredients";
                 _amount = 1;
                 _value = 1;
-                _type = ItemType.Ingredient;
+                _type = ItemType.Ingredients;
                 _icon = "Ingredients/Mushroom1";
                 _mesh = "Ingredients/Mushroom1";
                 _damage = 0;
                 _armour = 0;
                 _heal = 2;
                 _rarity = "common";
+                _stackable = true;
+                _isStacked = false;
                 break;
             case 1:
                 _name = "Cave Mushroom";
                 _description = "Found in caves this mushroom is used to craft posionous foods, death is guaranteed";
                 _amount = 1;
                 _value = 1;
-                _type = ItemType.Ingredient;
+                _type = ItemType.Ingredients;
                 _icon = "Ingredients/Mushroom2";
                 _mesh = "Ingredients/Mushroom2";
                 _damage = 0;
                 _armour = 0;
                 _heal = -7;
                 _rarity = "common";
+                _stackable = true;
+                _isStacked = false;
                 break;
             case 2:
                 _name = "Witch Hat Mushroom";
                 _description = "Located near witch huts these mushrooms pack a stronger poison effect than cave mushrooms, death is extra guranateed";
                 _amount = 1;
                 _value = 1;
-                _type = ItemType.Ingredient;
+                _type = ItemType.Ingredients;
                 _icon = "Ingredients/Mushroom3";
                 _mesh = "Ingredients/Mushroom3";
                 _damage = 0;
                 _armour = 0;
                 _heal = -15;
                 _rarity = "uncommon";
+                _stackable = true;
+                _isStacked = false;
                 break;
             #endregion
             #region Potion 100 - 199
@@ -68,7 +76,7 @@ public static class ItemData
                 _description = "A potion that grants quick mana recovery, every mage should have one y'know";
                 _amount = 1;
                 _value = 1;
-                _type = ItemType.Potion;
+                _type = ItemType.Potions;
                 _icon = "Potions/Potion1";
                 _mesh = "Potions/Potion1";
                 _damage = 0;
@@ -76,13 +84,15 @@ public static class ItemData
                 _heal = 0;
                 _rarity = "uncommon";
                 _mana = 50;
+                _stackable = true;
+                _isStacked = false;
                 break;
             case 101:
                 _name = "Blinding Potion";
                 _description = "A potion used to blind enemies or nearby players, flashbang in a glass";
                 _amount = 1;
                 _value = 1;
-                _type = ItemType.Potion;
+                _type = ItemType.Potions;
                 _icon = "Potions/Potion2";
                 _mesh = "Potions/Potion2";
                 _damage = 5;
@@ -90,13 +100,15 @@ public static class ItemData
                 _heal = 0;
                 _rarity = "uncommon";
                 _mana = 0;
+                _stackable = true;
+                _isStacked = false;
                 break;
             case 102:
                 _name = "Potion of Sight";
                 _description = "A potion usefull for dark caves or jorneys in night, pitch black is not a problem anymore";
                 _amount = 1;
                 _value = 1;
-                _type = ItemType.Potion;
+                _type = ItemType.Potions;
                 _icon = "Potions/Potion3";
                 _mesh = "Potions/Potion3";
                 _damage = 0;
@@ -104,6 +116,8 @@ public static class ItemData
                 _heal = 0;
                 _rarity = "uncommon";
                 _mana = 0;
+                _stackable = true;
+                _isStacked = false;
                 break;
             #endregion
             #region Scroll 200 - 299
@@ -112,39 +126,45 @@ public static class ItemData
                 _description = "Grants the user powerful fire attacks while activated";
                 _amount = 1;
                 _value = 1;
-                _type = ItemType.Potion;
+                _type = ItemType.Scrolls;
                 _icon = "Scrolls/Scroll1";
                 _mesh = "Scrolls/Scroll1";
                 _damage = 20;
                 _armour = 0;
                 _heal = 0;
                 _rarity = "uncommon";
+                _stackable = true;
+                _isStacked = false;
                 break;
             case 201:
                 _name = "Ice Scroll";
                 _description = "Grants the user powerful ice attacks while activated";
                 _amount = 1;
                 _value = 1;
-                _type = ItemType.Potion;
+                _type = ItemType.Scrolls;
                 _icon = "Scrolls/Scroll2";
                 _mesh = "Scrolls/Scroll2";
                 _damage = 25;
                 _armour = 0;
                 _heal = 0;
                 _rarity = "uncommon";
+                _stackable = true;
+                _isStacked = false;
                 break;
             case 202:
                 _name = "Earth Scroll";
                 _description = "Grants the user powerful earth attacks while activated";
                 _amount = 1;
                 _value = 1;
-                _type = ItemType.Potion;
+                _type = ItemType.Scrolls;
                 _icon = "Scrolls/Scroll3";
                 _mesh = "Scrolls/Scroll3";
                 _damage = 50;
                 _armour = 0;
                 _heal = 0;
                 _rarity = "uncommon";
+                _stackable = true;
+                _isStacked = false;
                 break;
             #endregion
             #region Food 300 - 399
@@ -160,6 +180,8 @@ public static class ItemData
                 _armour = 0;
                 _heal = 10;
                 _rarity = "common";
+                _stackable = true;
+                _isStacked = false;
                 break;
             case 301:
                 _name = "Pizza";
@@ -173,6 +195,8 @@ public static class ItemData
                 _armour = 0;
                 _heal = 30;
                 _rarity = "common";
+                _stackable = true;
+                _isStacked = false;
                 break;
             case 302:
                 _name = "Cooked Prawns";
@@ -186,6 +210,8 @@ public static class ItemData
                 _armour = 0;
                 _heal = 50;
                 _rarity = "rare";
+                _stackable = true;
+                _isStacked = false;
                 break;
             #endregion
             #region Apparel 400 - 499
@@ -201,6 +227,7 @@ public static class ItemData
                 _armour = 0;
                 _heal = 0;
                 _rarity = "common";
+                _stackable = false;
                 break;
             case 401:
                 _name = "Cloth Shirt";
@@ -214,6 +241,7 @@ public static class ItemData
                 _armour = 5;
                 _heal = 0;
                 _rarity = "common";
+                _stackable = false;
                 break;
             #endregion
             #region Weapon 500 - 599
@@ -222,39 +250,42 @@ public static class ItemData
                 _description = "A war axe useful for dominating masses of minions with fast and chaotic swings";
                 _amount = 1;
                 _value = 1;
-                _type = ItemType.Weapon;
+                _type = ItemType.Weapons;
                 _icon = "Weapons/Axe1";
                 _mesh = "Weapons/Axe1";
                 _damage = 10;
                 _armour = 0;
                 _heal = 0;
                 _rarity = "common";
+                _stackable = false;
                 break;
             case 501:
                 _name = "Bow";
                 _description = "A Cheap bow but it'll shoot to kill";
                 _amount = 1;
                 _value = 1;
-                _type = ItemType.Weapon;
+                _type = ItemType.Weapons;
                 _icon = "Weapons/Bow1";
                 _mesh = "Weapons/Bow1";
                 _damage = 5;
                 _armour = 0;
                 _heal = 0;
                 _rarity = "common";
+                _stackable = false;
                 break;
             case 502:
                 _name = "Sword";
                 _description = "Sword used for stabbing, cutting and thrusting through your enemies";
                 _amount = 1;
                 _value = 1;
-                _type = ItemType.Weapon;
+                _type = ItemType.Weapons;
                 _icon = "Weapons/Sword1";
                 _mesh = "Weapons/Sword1";
                 _damage = 25;
                 _armour = 0;
                 _heal = 0;
                 _rarity = "common";
+                _stackable = false;
                 break;
             #endregion
             #region Resource 600 - 699
@@ -263,39 +294,45 @@ public static class ItemData
                 _description = "A bunch of sticks used to start campires or...      other fires(arsony is illegal)";
                 _amount = 1;
                 _value = 1;
-                _type = ItemType.Resource;
+                _type = ItemType.Resources;
                 _icon = "Resources/Stick1";
                 _mesh = "Resources/Stick1";
                 _damage = 0;
                 _armour = 0;
                 _heal = 0;
                 _rarity = "common";
+                _stackable = true;
+                _isStacked = false;
                 break;
             case 601:
                 _name = "Oak Wood";
                 _description = "Wood from oak trees useful for crafting weapons";
                 _amount = 1;
                 _value = 1;
-                _type = ItemType.Resource;
+                _type = ItemType.Resources;
                 _icon = "Resources/Wood1";
                 _mesh = "Resources/Wood1";
                 _damage = 0;
                 _armour = 0;
                 _heal = 0;
                 _rarity = "common";
+                _stackable = true;
+                _isStacked = false;
                 break;
             case 602:
                 _name = "Birch Wood";
                 _description = "Wood from birch trees useful for crafting weapons";
                 _amount = 1;
                 _value = 1;
-                _type = ItemType.Resource;
+                _type = ItemType.Resources;
                 _icon = "Resources/Wood2";
                 _mesh = "Resources/Wood2";
                 _damage = 0;
                 _armour = 0;
                 _heal = 0;
                 _rarity = "common";
+                _stackable = true;
+                _isStacked = false;
                 break;
             #endregion
             #region Equipment 700 - 799
@@ -311,6 +348,8 @@ public static class ItemData
                 _armour = 0;
                 _heal = 0;
                 _rarity = "common";
+                _stackable = false;
+
                 break;
             case 701:
                 _name = "Wooden lute";
@@ -324,6 +363,7 @@ public static class ItemData
                 _armour = 0;
                 _heal = 0;
                 _rarity = "common";
+                _stackable = false;
                 break;
             case 702:
                 _name = "Rope";
@@ -337,6 +377,8 @@ public static class ItemData
                 _armour = 0;
                 _heal = 0;
                 _rarity = "common";
+                _stackable = true;
+                _isStacked = false;
                 break;
             #endregion
             #region Armour 800 - 899
@@ -352,6 +394,7 @@ public static class ItemData
                 _armour = 25;
                 _heal = 0;
                 _rarity = "common";
+                _stackable = false;
                 break;
             #endregion
             #region QuestItem 900 - 999
@@ -360,13 +403,14 @@ public static class ItemData
                 _description = "Infinity stone be cole brand compared to this";
                 _amount = 1;
                 _value = 999;
-                _type = ItemType.QuestItem;
+                _type = ItemType.QuestItems;
                 _icon = "QuestItem/PowerStone1";
                 _mesh = "QuestItem/PowerStone1";
                 _damage = 100;
                 _armour = 0;
                 _heal = 0;
                 _rarity = "quest legendary";
+                _stackable = false;
                 break;
             #endregion
             #region Junk 1000 - 1099
@@ -382,6 +426,8 @@ public static class ItemData
                 _armour = 0;
                 _heal = 0;
                 _rarity = "common";
+                _stackable = true;
+                _isStacked = false;
                 break;
             #endregion
             #region  Miscellanious 1100 - 1199
@@ -397,6 +443,8 @@ public static class ItemData
                 _armour = 0;
                 _heal = 0;
                 _rarity = "common";
+                _stackable = true;
+                _isStacked = false;
                 break;
             #endregion
             default:
@@ -404,13 +452,15 @@ public static class ItemData
                 _description = "default item";
                 _amount = 1;
                 _value = 1;
-                _type = ItemType.Ingredient;
+                _type = ItemType.Ingredients;
                 _icon = "Ingredients/Mushroom1";
                 _mesh = "Ingredients/Mushroom1";
                 _damage = 0;
                 _armour = 0;
                 _heal = 0;
                 _rarity = "common";
+                _stackable = true;
+                _isStacked = false;
                 break;
 
         }
@@ -430,8 +480,10 @@ public static class ItemData
             ItemMesh = Resources.Load("Meshes/" + _mesh) as GameObject,
             Name = _name,
             Description = _description,
-            Type = _type
-        };
+            Type = _type,
+            Stackable = _stackable
+            
+    };
         return temp;
     }
 }
