@@ -88,7 +88,7 @@ namespace Linear
                 //scr.y = Screen.height / 9;
 
                 //GUI.Box(new Rect(0, 0, scr.x * 8, Screen.height), "");
-                /*
+                
                 for (int i = 0; i < (int)ItemType.NumberOfTypes; i++)
                 {
                     if (GUI.Button(new Rect(i * scr.x, 0, scr.x, 0.25f * scr.y), ((ItemType)i).ToString()))
@@ -110,7 +110,6 @@ namespace Linear
                 {
                     return;
                 }
-                */
             }
             else
             {
