@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using TMPro;
+using UnityEngine.UI;
+
 
 namespace Linear
 {
@@ -11,8 +14,6 @@ namespace Linear
         public List<Item> inv = new List<Item>();//list of items
         public Item selectedItem;
         public bool showInv;
-        public GameObject inventory;
-        public GameObject inventoryItem;
 
         public Vector2 scr;
         public Vector2 scrollPos;
@@ -33,6 +34,9 @@ namespace Linear
         };
         public equipment[] equipmentSlots;
         public GUISkin invSkin;
+
+        public GameObject inventory;
+
         #endregion
 
         void Start()
@@ -84,7 +88,7 @@ namespace Linear
                 //scr.y = Screen.height / 9;
 
                 //GUI.Box(new Rect(0, 0, scr.x * 8, Screen.height), "");
-
+                /*
                 for (int i = 0; i < (int)ItemType.NumberOfTypes; i++)
                 {
                     if (GUI.Button(new Rect(i * scr.x, 0, scr.x, 0.25f * scr.y), ((ItemType)i).ToString()))
@@ -106,6 +110,7 @@ namespace Linear
                 {
                     return;
                 }
+                */
             }
             else
             {
