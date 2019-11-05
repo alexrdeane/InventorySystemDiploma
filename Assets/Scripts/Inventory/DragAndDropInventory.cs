@@ -30,6 +30,7 @@ public class DragAndDropInventory : MonoBehaviour
     public Rect toolTipRect;
     [Header("References and Locations")]
     public Vector2 scr;
+    public GameObject invMenu;
     #endregion
     #region Clamp to Screen
     //makes sure the inventory window doesnt go outside the border of the screen
