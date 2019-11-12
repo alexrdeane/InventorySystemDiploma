@@ -1,17 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class QuickSelect : MonoBehaviour
 {
     #region Variables
+    public List<Item> inv = new List<Item>();
+    public RawImage[] itemIcons;
+
     [Header("Main UI")]
     public bool showSelectMenu;
     public bool toggleTogglable;
     public float scrW, scrH;
     [Header("Resources")]
-    public Texture2D radialTexture;
-    public Texture2D slotTexture;
+    public Texture2D weaponSlot;
     [Range(0, 100)]
     public int circleScaleOffset;
     [Header("Icons")]
@@ -68,8 +71,8 @@ public class QuickSelect : MonoBehaviour
     private Vector2[] SlotPositions(int slots)
     {
         Vector2[] slotPos = new Vector2[slots];
-        float angle = 0 + radialRotation;
-        for (int i = 0; i < boundPos.Length; i++)
+        float angle = (iconOffset / 2) * 2 + radialRotation;
+        for (int i = 0; i < slotPos.Length; i++)
         {
             slotPos[i].x = circleCenter.x + circleRadius * Mathf.Cos(angle * Mathf.Deg2Rad);
             slotPos[i].y = circleCenter.y + circleRadius * Mathf.Sin(angle * Mathf.Deg2Rad);
@@ -77,11 +80,12 @@ public class QuickSelect : MonoBehaviour
         }
         return slotPos;
     }
-    void SetItemSlots(int slots, Vector2[] pos)
+    void SetItemSlots()
     {
-        for (int i = 0; i < slots; i++)
+        for (int i = 0; i < itemIcons.Length ; i++)
         {
-            GUI.DrawTexture(new Rect(pos[i].x - (scrW * iconSizeNum * 0.5f), pos[i].y - (scrH * iconSizeNum * 0.5f), scrW * iconSizeNum, scrH * iconSizeNum), slotTexture);
+           itemIcons[i].texture = inv[i].Icon;
+
         }
     }
     private int CheckCurrentSector(float angle)
@@ -141,6 +145,15 @@ public class QuickSelect : MonoBehaviour
     #endregion
 
     #region Unity Functions
+    private void Start()
+    {
+        inv.Add(ItemData.CreateItem(100));
+        inv.Add(ItemData.CreateItem(101));
+        inv.Add(ItemData.CreateItem(102));
+        inv.Add(ItemData.CreateItem(0));
+        inv.Add(ItemData.CreateItem(500));
+
+    }
     private void Update()
     {
         if (Input.GetKey(KeyCode.Tab))
@@ -148,45 +161,11 @@ public class QuickSelect : MonoBehaviour
             scrH = Screen.height / 9;
             scrW = Screen.width / 16;
 
-            circleCenter.x = Screen.width / 2;
-            circleCenter.y = Screen.height / 2;
             showSelectMenu = true;
         }
         else if (Input.GetKeyUp(KeyCode.Tab))
         {
             showSelectMenu = false;
-        }
-    }
-
-    private void OnGUI()
-    {
-        if (showSelectMenu)
-        {
-            CalculateMouseAngles();
-            sectorDegree = 360 / numOfSectors;
-            iconOffset = sectorDegree / 2;
-            slotPos = SlotPositions(numOfSectors);
-            boundPos = BoundPositions(numOfSectors);
-            GUI.Box(new Rect(scr(7.5f, 4), scr(1, 1)), "");
-            GUI.DrawTexture(new Rect(circleCenter.x - circleRadius - (circleScaleOffset / 4), circleCenter.y - circleRadius - (circleScaleOffset / 4), (circleRadius * 2) + (circleScaleOffset / 2), (circleRadius * 2) + (circleScaleOffset / 2)), radialTexture);
-            if (showBoxes)
-            {
-                for (int i = 0; i < numOfSectors; i++)
-                {
-                    GUI.DrawTexture(new Rect(slotPos[i].x - (scrW * iconSizeNum * 0.5f), slotPos[i].y - (scrH * iconSizeNum * 0.5f), scrW * iconSizeNum, scrH * iconSizeNum), slotTexture);
-                }
-            }
-            if (showBounds)
-            {
-                for (int i = 0; i < numOfSectors; i++)
-                {
-                    GUI.Box(new Rect(boundPos[i].x - (scrW * 0.1f * 0.5f), boundPos[i].y - (scrH * 0.1f * 0.5f), scrW * 0.1f, scrH * 0.1f), "");
-                }
-            }
-            if (showIcons)
-            {
-                SetItemSlots(numOfSectors, slotPos);
-            }
         }
     }
     #endregion
